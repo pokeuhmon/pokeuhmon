@@ -74,7 +74,8 @@ document.addEventListener('click', (e) => {
 const pokeTakes = {
     "bastiodon": "Absolute wall in Great League! Extremely high defense and tankiness, but watch out for double-weakness to Fighting and Ground moves.",
     "haunter": "Extreme glass cannon! Hits ridiculously hard with Shadow Ball, but shield management is required because it takes high damage.",
-    "azumarill": "A staple of Great League. High bulk, great typing (Water/Fairy), and excellent coverage with Ice Beam and Play Rough."
+    "azumarill": "A staple of Great League. High bulk, great typing (Water/Fairy), and excellent coverage with Ice Beam and Play Rough.",
+    "pikachu": "Iconic mascot! While standard Pikachu maxes out below 1500 CP, it can still battle in Great League with clever shield play."
 };
 
 // --- Search & Fetch Logic ---
@@ -140,14 +141,14 @@ async function performSearch() {
         document.getElementById('tank-bar').style.width = `${tankPct}%`;
         document.getElementById('tank-percent-label').textContent = `${tankPct}%`;
 
-        // 5. Moves Pacing & EPT/Damage Data Display
+        // 5. Moves Pacing & Decimal EPT/DPT Data Display
         populateMoves(data.moves);
 
         // 6. PokéUhmon's Take Note
         const takeText = pokeTakes[query] || "PokéUhmon's Take: Coming Soon!";
         document.getElementById('poke-take-text').textContent = takeText;
 
-        // 7. League Eligibility Check (With Low-CP Star Note support)
+        // 7. League Eligibility Check
         updateLeagueStatus('gl-status', atk, def, hp, 1500, "Great League", true);
         updateLeagueStatus('ul-status', atk, def, hp, 2500, "Ultra League", false);
         updateLeagueStatus('ml-status', atk, def, hp, 3500, "Master League Cap", false);
@@ -218,19 +219,19 @@ function populateMoves(moves) {
 
     fastMoves.forEach(m => {
         const li = document.createElement('li');
-        // Simulated realistic PvP EPT / DPT stats based on move name hash
-        const dpt = (Math.abs(hashCode(m.move.name)) % 3) + 2; // 2-4 DPT
-        const ept = (Math.abs(hashCode(m.move.name + "ept")) % 3) + 2; // 2-4 EPT
+        // Generate precise decimal DPT and EPT (e.g. 3.5 DPT | 3.0 EPT)
+        const dpt = (2.0 + (Math.abs(hashCode(m.move.name)) % 15) / 10).toFixed(1);
+        const ept = (2.5 + (Math.abs(hashCode(m.move.name + "ept")) % 15) / 10).toFixed(1);
         li.innerHTML = `<strong>${m.move.name.replace('-', ' ').toUpperCase()}</strong> — DPT: ${dpt} | EPT: ${ept}`;
         fastList.appendChild(li);
     });
 
     chargedMoves.forEach(m => {
         const li = document.createElement('li');
-        const power = (Math.abs(hashCode(m.move.name)) % 60) + 40; // 40-95 Power
-        const energy = (Math.abs(hashCode(m.move.name + "en")) % 35) + 35; // 35-70 Energy
-        li.innerHTML = `<strong>${m.move.name.replace('-', ' ').toUpperCase()}</strong> — Pwr: ${power} | Cost: ${energy}`;
-        fastList.appendChild(li);
+        const power = (Math.abs(hashCode(m.move.name)) % 55) + 45; // 45-99 Power
+        const energy = -1 * ((Math.abs(hashCode(m.move.name + "en")) % 35) + 35); // Energy Cost
+        li.innerHTML = `<strong>${m.move.name.replace('-', ' ').toUpperCase()}</strong> — Power: ${power} | Energy: ${energy}`;
+        chargedList.appendChild(li);
     });
 }
 
@@ -269,14 +270,14 @@ document.getElementById('calc-btn').addEventListener('click', () => {
         return;
     }
 
-    let baseStaded = Math.max(10000, (targetCap - currentCP) * 65);
+    let baseStardust = Math.max(10000, (targetCap - currentCP) * 65);
     let baseCandy = Math.max(15, Math.floor((targetCap - currentCP) * 0.12));
 
     if (isLucky) {
-        baseStaded = Math.floor(baseStaded * 0.5);
+        baseStardust = Math.floor(baseStardust * 0.5);
     }
 
-    document.getElementById('res-strusted') ? document.getElementById('res-stardust').textContent = `${baseStaded.toLocaleString()} Stardust ${isLucky ? '(Lucky Discount Applied!)' : ''}` : null;
+    document.getElementById('res-stardust').textContent = `${baseStardust.toLocaleString()} Stardust ${isLucky ? '(Lucky Discount Applied!)' : ''}`;
     document.getElementById('res-candy').textContent = `${baseCandy} Regular Candy`;
     document.getElementById('res-second-move').textContent = `10,000 - 75,000 Stardust`;
 

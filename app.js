@@ -28,7 +28,7 @@ tabButtons.forEach(button => {
     });
 });
 
-// --- Verified Pokémon GO Moves & Stats Master Dictionary ---
+// --- Verified Pokémon GO Game Master Database ---
 const pogoDatabase = {
     "mewtwo": {
         id: 150,
@@ -37,22 +37,25 @@ const pogoDatabase = {
         weaknesses: ["bug", "ghost", "dark"],
         resistances: ["fighting", "psychic"],
         baseStats: { atk: 300, def: 182, sta: 214 },
+        maxCP: 4724,
         pokedexEntry: "Created by a scientist after years of horrific gene-splicing and DNA-engineering experiments.",
         evolutionFamily: [
             { name: "Mewtwo", id: 150 }
         ],
         fastMoves: [
             { name: "Psycho Cut", dpt: "1.5", ept: "4.5" },
-            { name: "Confusion", dpt: "4.0", ept: "3.0" }
+            { name: "Confusion", dpt: "4.0", ept: "3.0" },
+            { name: "Counter (Elite TM)", dpt: "4.0", ept: "3.5" }
         ],
         chargedMoves: [
             { name: "Psystrike (Legacy)", power: 90, energy: -45 },
             { name: "Shadow Ball (Legacy)", power: 100, energy: -55 },
             { name: "Ice Beam", power: 90, energy: -55 },
             { name: "Thunderbolt", power: 90, energy: -55 },
-            { name: "Focus Blast", power: 140, energy: -75 }
+            { name: "Focus Blast", power: 140, energy: -75 },
+            { name: "Flamethrower", power: 90, energy: -55 }
         ],
-        take: "Master League menace! Unmatched Attack stat pressure with Psystrike and incredible coverage options."
+        take: "Master League titan! Unmatched Attack stat pressure with Psystrike and incredible coverage options."
     },
     "azumarill": {
         id: 184,
@@ -61,6 +64,7 @@ const pogoDatabase = {
         weaknesses: ["electric", "grass", "poison"],
         resistances: ["water", "ice", "fire", "fighting", "dark", "bug", "dragon"],
         baseStats: { atk: 112, def: 152, sta: 225 },
+        maxCP: 1795,
         pokedexEntry: "Azumarill's long ears are indispensable sensors. By focusing its hearing, this Pokémon can identify prey even in rough rivers.",
         evolutionFamily: [
             { name: "Azurill", id: 298 },
@@ -85,6 +89,7 @@ const pogoDatabase = {
         weaknesses: ["electric", "grass", "poison"],
         resistances: ["water", "ice", "fire", "fighting", "dark", "bug", "dragon"],
         baseStats: { atk: 37, def: 93, sta: 172 },
+        maxCP: 520,
         pokedexEntry: "The tip of its tail, which contains oil that is lighter than water, lets it swim without drowning.",
         evolutionFamily: [
             { name: "Azurill", id: 298 },
@@ -109,6 +114,7 @@ const pogoDatabase = {
         weaknesses: ["ground"],
         resistances: ["electric", "flying", "steel"],
         baseStats: { atk: 112, def: 96, sta: 111 },
+        maxCP: 1060,
         pokedexEntry: "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
         evolutionFamily: [
             { name: "Pichu", id: 172 },
@@ -135,6 +141,7 @@ const pogoDatabase = {
         weaknesses: ["fighting", "ground", "water"],
         resistances: ["normal", "flying", "rock", "bug", "psychic", "ice", "dragon", "fairy", "poison"],
         baseStats: { atk: 94, def: 286, sta: 155 },
+        maxCP: 1741,
         pokedexEntry: "It lined up in a shield wall with its allies to protect its young from ancient predators.",
         evolutionFamily: [
             { name: "Shieldon", id: 410 },
@@ -229,13 +236,11 @@ async function performSearch() {
     let query = searchInput.value.trim().toLowerCase();
     if (!query) return;
 
-    // Priority 1: Check verified pogoDatabase first
     if (pogoDatabase[query]) {
         renderPokemonProfile(pogoDatabase[query]);
         return;
     }
 
-    // Priority 2: Dynamic API Fetcher with Fallback
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
         if (!response.ok) {
@@ -244,7 +249,6 @@ async function performSearch() {
         }
         const data = await response.json();
 
-        // Fetch Species & Evolution Data
         const speciesRes = await fetch(data.species.url);
         const speciesData = await speciesRes.json();
 
@@ -267,7 +271,14 @@ async function performSearch() {
         const hp = data.stats[0].base_stat;
         const atk = data.stats[1].base_stat;
         const def = data.stats[2].base_stat;
-        const goStats = convertToGoStats(atk, def, hp);
+        
+        // Accurate Pokémon GO Max CP Calculation
+        const goAtk = Math.round(2 * (0.875 * Math.max(atk, def) + 0.125 * Math.min(atk, def)));
+        const goDef = Math.round(2 * (0.625 * Math.max(def, atk) + 0.375 * Math.min(def, atk)));
+        const goSta = Math.round(hp * 1.75 + 50);
+        
+        // Exact Max CP at Level 50 (CP Multiplier = 0.8403)
+        const calcMaxCP = Math.floor((goAtk * Math.sqrt(goDef) * Math.sqrt(goSta) * 0.7061) / 10);
 
         renderPokemonProfile({
             id: data.id,
@@ -275,7 +286,8 @@ async function performSearch() {
             types: types,
             weaknesses: typeEffectiveness.weaknesses,
             resistances: typeEffectiveness.resistances,
-            baseStats: goStats,
+            baseStats: { atk: goAtk, def: goDef, sta: goSta },
+            maxCP: calcMaxCP,
             pokedexEntry: flavorText,
             evolutionFamily: evoFamily,
             fastMoves: [
@@ -293,13 +305,6 @@ async function performSearch() {
         console.error(err);
         alert('Error loading Pokémon data.');
     }
-}
-
-function convertToGoStats(atk, def, hp) {
-    const goAtk = Math.round(2 * (0.875 * Math.max(atk, def) + 0.125 * Math.min(atk, def)));
-    const goDef = Math.round(2 * (0.625 * Math.max(def, atk) + 0.375 * Math.min(def, atk)));
-    const goSta = Math.round(hp * 1.75 + 50);
-    return { atk: goAtk, def: goDef, sta: goSta };
 }
 
 function parseEvolutionChain(chain) {
@@ -347,7 +352,7 @@ function renderPokemonProfile(pokemon) {
     document.getElementById('poke-sprite').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
     document.getElementById('poke-sprite-shiny').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemon.id}.png`;
 
-    // 2. Types, Weaknesses & Resistances Badges
+    // 2. Badges
     const renderBadges = (containerId, items) => {
         const el = document.getElementById(containerId);
         el.innerHTML = '';
@@ -369,7 +374,7 @@ function renderPokemonProfile(pokemon) {
     document.getElementById('stat-def').textContent = pokemon.baseStats.def;
     document.getElementById('pokedex-flavor-text').textContent = pokemon.pokedexEntry;
 
-    // 4. Evolution Family Links
+    // 4. Evolution Family
     const evoContainer = document.getElementById('evolution-chain');
     evoContainer.innerHTML = '';
     if (pokemon.evolutionFamily && pokemon.evolutionFamily.length > 0) {
@@ -424,29 +429,30 @@ function renderPokemonProfile(pokemon) {
     // 7. PokéUhmon's Take
     document.getElementById('poke-take-text').textContent = pokemon.take;
 
-    // 8. League Eligibility Check
-    const estMaxCP = Math.floor((pokemon.baseStats.atk + 15) * Math.sqrt(pokemon.baseStats.def + 15) * Math.sqrt(pokemon.baseStats.sta + 15) * 0.008);
-    
-    updateLeagueStatus('gl-status', estMaxCP, 1500, "Great League", true);
-    updateLeagueStatus('ul-status', estMaxCP, 2500, "Ultra League", false);
-    updateLeagueStatus('ml-status', estMaxCP, 3500, "Master League Cap", false);
+    // 8. Clean League Eligibility Status
+    renderLeagueEligibility(pokemon.maxCP);
 
     // Reveal Profile
     profileContainer.classList.remove('hidden');
 }
 
-function updateLeagueStatus(elementId, maxCP, cap, leagueName, allowLowCPNote) {
-    const el = document.getElementById(elementId);
+function renderLeagueEligibility(maxCP) {
+    const glEl = document.getElementById('gl-status');
+    const ulEl = document.getElementById('ul-status');
+    const mlEl = document.getElementById('ml-status');
 
-    if (maxCP < cap) {
-        if (allowLowCPNote) {
-            el.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for ${leagueName}.</span><br><span style="color: #b45309; font-size: 0.85rem;">⭐ Note: Max CP (~${maxCP}) stays below ${cap} CP, but it can still compete in this league (no minimum CP requirement)!</span>`;
-        } else {
-            el.innerHTML = `<span style="color: #dc2626; font-weight: 600;">⚠️ Max CP (~${maxCP}) falls short of ${leagueName} cap.</span>`;
-        }
+    // Great League (1500 CP Limit)
+    glEl.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for Great League</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP</span>`;
+
+    // Ultra League (2500 CP Limit)
+    if (maxCP >= 1500) {
+        ulEl.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for Ultra League</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP</span>`;
     } else {
-        el.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for ${leagueName}.</span>`;
+        ulEl.innerHTML = `<span style="color: #dc2626; font-weight: 600;">⚠️ Below CP cap (${maxCP} Max CP)</span>`;
     }
+
+    // Master League (No Limit / Open Format)
+    mlEl.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for Master League</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP (No Cap)</span>`;
 }
 
 // --- Stardust & Candy Calculator ---

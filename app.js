@@ -35,6 +35,7 @@ const pogoDatabase = {
         name: "AZUMARILL",
         types: ["water", "fairy"],
         weaknesses: ["electric", "grass", "poison"],
+        resistances: ["water", "ice", "fire", "fighting", "dark", "bug"],
         baseStats: { atk: 112, def: 152, sta: 225 },
         pokedexEntry: "Azumarill's long ears are indispensable sensors. By focusing its hearing, this Pokémon can identify what kinds of prey are around, even in rough and fast-running rivers.",
         evolutionFamily: [
@@ -58,6 +59,7 @@ const pogoDatabase = {
         name: "PIKACHU",
         types: ["electric"],
         weaknesses: ["ground"],
+        resistances: ["electric", "flying", "steel"],
         baseStats: { atk: 112, def: 96, sta: 111 },
         pokedexEntry: "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
         evolutionFamily: [
@@ -84,6 +86,7 @@ const pogoDatabase = {
         name: "BASTIODON",
         types: ["rock", "steel"],
         weaknesses: ["fighting", "ground", "water"],
+        resistances: ["normal", "flying", "rock", "bug", "psychic", "ice", "dragon", "fairy", "poison"],
         baseStats: { atk: 94, def: 286, sta: 155 },
         pokedexEntry: "It lined up in a shield wall with its allies to protect its young from attacks by ancient predators.",
         evolutionFamily: [
@@ -168,7 +171,7 @@ async function performSearch() {
         }
         const data = await response.json();
 
-        // Fetch Species data for flavor text and evolutions
+        // Fetch Species data
         const speciesRes = await fetch(data.species.url);
         const speciesData = await speciesRes.json();
 
@@ -183,6 +186,7 @@ async function performSearch() {
             name: data.name.toUpperCase(),
             types: data.types.map(t => t.type.name),
             weaknesses: ["ground"],
+            resistances: ["electric", "flying"],
             baseStats: {
                 sta: data.stats[0].base_stat,
                 atk: data.stats[1].base_stat,
@@ -214,14 +218,14 @@ async function performSearch() {
 }
 
 function renderPogoData(pokemon) {
-    // 1. Titles & Side-by-Side Sprites (Normal & Shiny)
+    // 1. Titles & Sprites
     document.getElementById('poke-name').textContent = pokemon.name;
     document.getElementById('poke-id').textContent = `#${String(pokemon.id).padStart(3, '0')}`;
     
     document.getElementById('poke-sprite').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
     document.getElementById('poke-sprite-shiny').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemon.id}.png`;
 
-    // 2. Types & Weaknesses
+    // 2. Types, Weaknesses & Resistances
     const typesContainer = document.getElementById('poke-types');
     typesContainer.innerHTML = '';
     pokemon.types.forEach(t => {
@@ -238,6 +242,15 @@ function renderPogoData(pokemon) {
         badge.className = `type-badge type-${w}`;
         badge.textContent = w.toUpperCase();
         weaknessContainer.appendChild(badge);
+    });
+
+    const resistanceContainer = document.getElementById('poke-resistances');
+    resistanceContainer.innerHTML = '';
+    pokemon.resistances.forEach(r => {
+        const badge = document.createElement('span');
+        badge.className = `type-badge type-${r}`;
+        badge.textContent = r.toUpperCase();
+        resistanceContainer.appendChild(badge);
     });
 
     // 3. Base Stats & Pokédex Flavor Text Entry

@@ -563,3 +563,33 @@ body {
     font-size: 1.25rem;
     color: var(--text-primary);
 }
+/* --- Development Disclaimer Style --- */
+.dev-disclaimer {
+    background-color: #fff8e6;
+    border: 1px solid #ffe082;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 12px auto 6px auto;
+    max-width: 750px;
+    text-align: center;
+}
+
+.dev-badge {
+    background-color: #f59e0b;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dev-disclaimer p {
+    color: #78350f;
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.4;
+}

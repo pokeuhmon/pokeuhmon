@@ -9,9 +9,7 @@ navButtons.forEach(btn => {
 
         btn.classList.add('active');
         const targetPage = document.getElementById(btn.dataset.nav);
-        if (targetPage) {
-            targetPage.classList.remove('hidden');
-        }
+        if (targetPage) targetPage.classList.remove('hidden');
     });
 });
 
@@ -26,23 +24,61 @@ tabButtons.forEach(button => {
 
         button.classList.add('active');
         const targetPane = document.getElementById(button.dataset.target);
-        if (targetPane) {
-            targetPane.classList.add('active');
-        }
+        if (targetPane) targetPane.classList.add('active');
     });
 });
 
-// --- Custom "PokéUhmon's Take" Database ---
+// --- Full Pokémon List for Autocomplete & Typo Matching ---
+const pokemonList = [
+    "Azumarill", "Bastiodon", "Haunter", "Medicham", "Swampert", "Vulpix", "Ninetales",
+    "Altaria", "Skarmory", "Lickitung", "Clodsire", "Mandibuzz", "Stunfisk", "Trevenant",
+    "Charizard", "Venusaur", "Registeel", "Pikachu", "Eevee", "Machamp", "Gengar",
+    "Dragonite", "Snorlax", "Lucario", "Talonflame", "Pelipper", "Cresselia", "Giratina",
+    "Dialga", "Palkia", "Kyogre", "Groudon", "Rayquaza", "Mewtwo", "Tyranitar", "Umbreon"
+];
+
+const searchInput = document.getElementById('pokemon-search');
+const autocompleteList = document.getElementById('autocomplete-list');
+
+searchInput.addEventListener('input', function() {
+    const val = this.value.toLowerCase().trim();
+    autocompleteList.innerHTML = '';
+    
+    if (!val) {
+        autocompleteList.classList.add('hidden');
+        return;
+    }
+
+    const matches = pokemonList.filter(p => p.toLowerCase().includes(val));
+    if (matches.length > 0) {
+        autocompleteList.classList.remove('hidden');
+        matches.forEach(match => {
+            const item = document.createElement('div');
+            item.textContent = match;
+            item.addEventListener('click', () => {
+                searchInput.value = match;
+                autocompleteList.classList.add('hidden');
+                performSearch();
+            });
+            autocompleteList.appendChild(item);
+        });
+    } else {
+        autocompleteList.classList.add('hidden');
+    }
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target !== searchInput) autocompleteList.classList.add('hidden');
+});
+
+// --- Custom "PokéUhmon's Take" Notes ---
 const pokeTakes = {
     "bastiodon": "Absolute wall in Great League! Extremely high defense and tankiness, but watch out for double-weakness to Fighting and Ground moves.",
     "haunter": "Extreme glass cannon! Hits ridiculously hard with Shadow Ball, but shield management is required because it takes high damage.",
-    "azumarill": "A staple of Great League. High bulk, great typing (Water/Fairy), and excellent coverage with Ice Beam and Play Rough.",
-    "medicham": "A versatile fighter with Counter and Ice Punch coverage. High stat product at level 50.",
-    "swampert": "Hydro Cannon spam machine! Incredible energy generation with Mud Shot makes it dangerous in all leagues."
+    "azumarill": "A staple of Great League. High bulk, great typing (Water/Fairy), and excellent coverage with Ice Beam and Play Rough."
 };
 
 // --- Search & Fetch Logic ---
-const searchInput = document.getElementById('pokemon-search');
 const searchBtn = document.getElementById('search-btn');
 const profileContainer = document.getElementById('pokemon-profile');
 
@@ -52,13 +88,20 @@ searchInput.addEventListener('keypress', (e) => {
 });
 
 async function performSearch() {
-    const query = searchInput.value.trim().toLowerCase();
+    let query = searchInput.value.trim().toLowerCase();
     if (!query) return;
+
+    // Fuzzy matching fallback if user misspells slightly
+    const exactMatch = pokemonList.find(p => p.toLowerCase() === query);
+    if (!exactMatch) {
+        const closeMatch = pokemonList.find(p => p.toLowerCase().startsWith(query.substring(0, 3)));
+        if (closeMatch) query = closeMatch.toLowerCase();
+    }
 
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
         if (!response.ok) {
-            alert('Pokémon not found! Please check the spelling.');
+            alert('Pokémon not found! Try picking a suggestion from the dropdown list.');
             return;
         }
         const data = await response.json();
@@ -70,7 +113,7 @@ async function performSearch() {
         const artwork = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
         document.getElementById('poke-sprite').src = artwork;
 
-        // Type Badges
+        // 2. Type Badges & Weaknesses
         const typesContainer = document.getElementById('poke-types');
         typesContainer.innerHTML = '';
         data.types.forEach(t => {
@@ -80,7 +123,9 @@ async function performSearch() {
             typesContainer.appendChild(badge);
         });
 
-        // 2. Base Stats
+        fetchWeaknesses(data.types.map(t => t.type.name));
+
+        // 3. Base Stats
         const hp = data.stats[0].base_stat;
         const atk = data.stats[1].base_stat;
         const def = data.stats[2].base_stat;
@@ -89,25 +134,31 @@ async function performSearch() {
         document.getElementById('stat-atk').textContent = atk;
         document.getElementById('stat-def').textContent = def;
 
-        // 3. Tankiness Scale Calculation (Relative to Bastiodon vs Haunter)
-        // Tankiness ~ (Def * HP)
+        // 4. Tankiness Scale Calculation
         const statProduct = def * hp;
-        const minTank = 5000;   // Glass cannon benchmark
-        const maxTank = 35000;  // Top tank benchmark
-        let tankPct = ((statProduct - minTank) / (maxTank - minTank)) * 100;
+        let tankPct = ((statProduct - 5000) / 30000) * 100;
         tankPct = Math.max(5, Math.min(99.9, tankPct)).toFixed(1);
 
         document.getElementById('tank-bar').style.width = `${tankPct}%`;
         document.getElementById('tank-percent-label').textContent = `${tankPct}%`;
 
-        // 4. PokéUhmon's Take Note
-        const takeText = pokeTakes[query] || `PokéUhmon's Take: ${data.name.toUpperCase()} is a solid pick with unique strategy potential. Practice move timing and shield usage to get the most out of it!`;
+        // 5. Moves Pacing Data Display (Focus Tab)
+        populateMoves(data.moves);
+
+        // 6. PokéUhmon's Take Note
+        const takeText = pokeTakes[query] || "PokéUhmon's Take: Coming Soon!";
         document.getElementById('poke-take-text').textContent = takeText;
 
-        // 5. League Eligibility Check (100% Hundo Benchmark)
+        // 7. League Eligibility Check
         updateLeagueStatus('gl-status', atk, def, hp, 1500, "Great League");
         updateLeagueStatus('ul-status', atk, def, hp, 2500, "Ultra League");
         updateLeagueStatus('ml-status', atk, def, hp, 3500, "Master League Cap");
+
+        // Set default active tab to Moves
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-target="tab-moves"]').classList.add('active');
+        document.getElementById('tab-moves').classList.add('active');
 
         // Reveal Profile
         profileContainer.classList.remove('hidden');
@@ -118,15 +169,76 @@ async function performSearch() {
     }
 }
 
+function fetchWeaknesses(types) {
+    const weaknessContainer = document.getElementById('poke-weaknesses');
+    weaknessContainer.innerHTML = '';
+    
+    const weaknessMap = {
+        fire: ['water', 'ground', 'rock'],
+        water: ['electric', 'grass'],
+        grass: ['fire', 'ice', 'poison', 'flying', 'bug'],
+        electric: ['ground'],
+        ice: ['fire', 'fighting', 'rock', 'steel'],
+        fighting: ['flying', 'psychic', 'fairy'],
+        poison: ['ground', 'psychic'],
+        ground: ['water', 'grass', 'ice'],
+        flying: ['electric', 'ice', 'rock'],
+        psychic: ['bug', 'ghost', 'dark'],
+        bug: ['fire', 'flying', 'rock'],
+        rock: ['water', 'grass', 'fighting', 'ground', 'steel'],
+        ghost: ['ghost', 'dark'],
+        dragon: ['ice', 'dragon', 'fairy'],
+        steel: ['fire', 'fighting', 'ground'],
+        fairy: ['poison', 'steel'],
+        normal: ['fighting'],
+        dark: ['fighting', 'bug', 'fairy']
+    };
+
+    let foundWeaknesses = new Set();
+    types.forEach(t => {
+        if (weaknessMap[t]) {
+            weaknessMap[t].forEach(w => foundWeaknesses.add(w));
+        }
+    });
+
+    foundWeaknesses.forEach(w => {
+        const badge = document.createElement('span');
+        badge.className = `type-badge type-${w}`;
+        badge.textContent = w.toUpperCase();
+        weaknessContainer.appendChild(badge);
+    });
+}
+
+function populateMoves(moves) {
+    const fastList = document.getElementById('fast-moves-list');
+    const chargedList = document.getElementById('charged-moves-list');
+    fastList.innerHTML = '';
+    chargedList.innerHTML = '';
+
+    const fastMoves = moves.slice(0, 4);
+    const chargedMoves = moves.slice(4, 9);
+
+    fastMoves.forEach(m => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${m.move.name.replace('-', ' ').toUpperCase()}</strong> — High Energy Generation`;
+        fastList.appendChild(li);
+    });
+
+    chargedMoves.forEach(m => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${m.move.name.replace('-', ' ').toUpperCase()}</strong> — Fast Pacing (~4 Fast Moves)`;
+        chargedList.appendChild(li);
+    });
+}
+
 function updateLeagueStatus(elementId, atk, def, hp, cap, leagueName) {
     const el = document.getElementById(elementId);
-    // Estimated max CP at level 50
     const estMaxCP = Math.floor((atk + 15) * Math.sqrt(def + 15) * Math.sqrt(hp + 15) * 0.008);
 
     if (estMaxCP < cap && cap !== 1500) {
-        el.innerHTML = `<span style="color: #f43f5e;">⚠️ Max CP (~${estMaxCP}) falls short of ${leagueName} cap.</span>`;
+        el.innerHTML = `<span style="color: #dc2626; font-weight: 600;">⚠️ Max CP (~${estMaxCP}) falls short of ${leagueName} cap.</span>`;
     } else {
-        el.innerHTML = `<span style="color: #10b981;">✅ Eligible for ${leagueName} (100% Hundo max CP cap).</span>`;
+        el.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for ${leagueName}.</span>`;
     }
 }
 
@@ -145,12 +257,12 @@ document.getElementById('calc-btn').addEventListener('click', () => {
     let baseCandy = Math.max(15, Math.floor((targetCap - currentCP) * 0.12));
 
     if (isLucky) {
-        baseStardust = Math.floor(baseStardust * 0.5); // 50% Stardust discount
+        baseStardust = Math.floor(baseStardust * 0.5);
     }
 
     document.getElementById('res-stardust').textContent = `${baseStardust.toLocaleString()} Stardust ${isLucky ? '(Lucky Discount Applied!)' : ''}`;
     document.getElementById('res-candy').textContent = `${baseCandy} Regular Candy`;
-    document.getElementById('res-second-move').textContent = `10,000 - 75,000 Stardust (Varies by Buddy Distance)`;
+    document.getElementById('res-second-move').textContent = `10,000 - 75,000 Stardust`;
 
     document.getElementById('calc-results').classList.remove('hidden');
 });

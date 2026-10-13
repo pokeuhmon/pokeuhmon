@@ -2,18 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéUhmon - Pokémon GO Strategy Database</title>
-    <style>
-        body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; text-align: center; padding: 40px; }
-        h1 { color: #38bdf8; }
-        .card { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 600px; margin: 20px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-    </style>
+    <meta name5="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéUhmon - Pokémon GO Great League & Database</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>PokéUhmon Database</h1>
-    <div class="card">
-        <p>Great League PvP stats, movesets, and team builder coming soon!</p>
-    </div>
+    <header class="site-header">
+        <h1>PokéUhmon</h1>
+        <p>High-Performance Pokémon GO Strategy & PvP Database</p>
+    </header>
+
+    <main class="container">
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Medicham)..." autocomplete="off">
+                <button id="search-btn">Search</button>
+            </div>
+        </section>
+
+        <!-- Pokémon Display Profile (Hidden until searched) -->
+        <section id="pokemon-profile" class="profile-container hidden">
+            <div class="profile-header">
+                <img id="poke-sprite" src="" alt="Pokémon Sprite">
+                <div class="poke-titles">
+                    <span id="poke-id">#000</span>
+                    <h2 id="poke-name">Pokémon Name</h2>
+                    <div id="poke-types" class="type-badges"></div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <nav class="profile-tabs">
+                <button class="tab-btn active" data-target="tab-overview">Overview & Dex</button>
+                <button class="tab-btn" data-target="tab-pvp">Great League PvP</button>
+                <button class="tab-btn" data-target="tab-moves">Moves & Energy</button>
+                <button class="tab-btn" data-target="tab-evolution">Evolutions</button>
+            </nav>
+
+            <!-- Tab Content Panels -->
+            <div class="tab-content">
+                <!-- Overview Tab -->
+                <div id="tab-overview" class="tab-pane active">
+                    <h3>Pokedex Information</h3>
+                    <p id="poke-description">Loading description...</p>
+                    <div class="stats-grid">
+                        <div class="stat-card"><span>Base Attack</span><strong id="stat-atk">-</strong></div>
+                        <div class="stat-card"><span>Base Defense</span><strong id="stat-def">-</strong></div>
+                        <div class="stat-card"><span>Base Stamina</span><strong id="stat-sta">-</strong></div>
+                    </div>
+                </div>
+
+                <!-- Great League PvP Tab -->
+                <div id="tab-pvp" class="tab-pane">
+                    <h3>Great League (1500 CP Cap) Performance</h3>
+                    <div class="pvp-summary">
+                        <p><strong>Tank Rating / Stat Product:</strong> <span id="pvp-stat-product">-</span></p>
+                        <p>Optimal IV Spread & CP pacing coming up.</p>
+                    </div>
+                </div>
+
+                <!-- Moves Tab -->
+                <div id="tab-moves" class="tab-pane">
+                    <h3>Fast & Charged Moves</h3>
+                    <div class="moves-container">
+                        <div class="move-column">
+                            <h4>Fast Moves (DPT / EPT)</h4>
+                            <ul id="fast-moves-list"></ul>
+                        </div>
+                        <div class="move-column">
+                            <h4>Charged Moves (Power / Energy)</h4>
+                            <ul id="charged-moves-list"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evolution Tab -->
+                <div id="tab-evolution" class="tab-pane">
+                    <h3>Evolution Chain</h3>
+                    <div id="evolution-chain" class="evolution-flex"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
 </body>
 </html>

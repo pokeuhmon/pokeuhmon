@@ -2,88 +2,198 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name5="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéUhmon - Pokémon GO Great League & Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéUhmon - Pokémon GO Strategy & PvP Hub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="site-header">
-        <h1>PokéUhmon</h1>
-        <p>High-Performance Pokémon GO Strategy & PvP Database</p>
+        <div class="header-content">
+            <h1>PokéUhmon</h1>
+            <p>High-Performance Pokémon GO Strategy, Hundo PvP Stats & Friendly Guidance</p>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-nav="nav-db">Database & PvP</button>
+                <button class="nav-btn" data-nav="nav-tips">Trainer Tips (Newbies Start Here)</button>
+                <button class="nav-btn" data-nav="nav-about">About & Socials</button>
+            </nav>
+        </div>
     </header>
 
     <main class="container">
-        <!-- Search Section -->
-        <section class="search-section">
-            <div class="search-box">
-                <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Medicham)..." autocomplete="off">
-                <button id="search-btn">Search</button>
-            </div>
-        </section>
-
-        <!-- Pokémon Display Profile (Hidden until searched) -->
-        <section id="pokemon-profile" class="profile-container hidden">
-            <div class="profile-header">
-                <img id="poke-sprite" src="" alt="Pokémon Sprite">
-                <div class="poke-titles">
-                    <span id="poke-id">#000</span>
-                    <h2 id="poke-name">Pokémon Name</h2>
-                    <div id="poke-types" class="type-badges"></div>
+        <!-- Main Database View -->
+        <div id="nav-db" class="nav-page active">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-box">
+                    <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Bastiodon, Haunter)..." autocomplete="off">
+                    <button id="search-btn">Search</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- Tab Navigation -->
-            <nav class="profile-tabs">
-                <button class="tab-btn active" data-target="tab-overview">Overview & Dex</button>
-                <button class="tab-btn" data-target="tab-pvp">Great League PvP</button>
-                <button class="tab-btn" data-target="tab-moves">Moves & Energy</button>
-                <button class="tab-btn" data-target="tab-evolution">Evolutions</button>
-            </nav>
-
-            <!-- Tab Content Panels -->
-            <div class="tab-content">
-                <!-- Overview Tab -->
-                <div id="tab-overview" class="tab-pane active">
-                    <h3>Pokedex Information</h3>
-                    <p id="poke-description">Loading description...</p>
-                    <div class="stats-grid">
-                        <div class="stat-card"><span>Base Attack</span><strong id="stat-atk">-</strong></div>
-                        <div class="stat-card"><span>Base Defense</span><strong id="stat-def">-</strong></div>
-                        <div class="stat-card"><span>Base Stamina</span><strong id="stat-sta">-</strong></div>
+            <!-- Pokémon Profile Container (Hidden until searched) -->
+            <section id="pokemon-profile" class="profile-container hidden">
+                <div class="profile-header">
+                    <img id="poke-sprite" src="" alt="Pokémon Sprite">
+                    <div class="poke-titles">
+                        <span id="poke-id">#000</span>
+                        <h2 id="poke-name">Pokémon Name</h2>
+                        <div id="poke-types" class="type-badges"></div>
                     </div>
                 </div>
 
-                <!-- Great League PvP Tab -->
-                <div id="tab-pvp" class="tab-pane">
-                    <h3>Great League (1500 CP Cap) Performance</h3>
-                    <div class="pvp-summary">
-                        <p><strong>Tank Rating / Stat Product:</strong> <span id="pvp-stat-product">-</span></p>
-                        <p>Optimal IV Spread & CP pacing coming up.</p>
-                    </div>
+                <!-- PokéUhmon's Personal Take Note -->
+                <div class="take-note-box">
+                    <h3>💡 PokéUhmon's Take</h3>
+                    <p id="poke-take-text">Searching for custom insights...</p>
                 </div>
 
-                <!-- Moves Tab -->
-                <div id="tab-moves" class="tab-pane">
-                    <h3>Fast & Charged Moves</h3>
-                    <div class="moves-container">
-                        <div class="move-column">
-                            <h4>Fast Moves (DPT / EPT)</h4>
-                            <ul id="fast-moves-list"></ul>
+                <!-- Sub-Tabs for Pokémon Profile -->
+                <nav class="profile-tabs">
+                    <button class="tab-btn active" data-target="tab-pvp">PvP Rankings & Tank Scale</button>
+                    <button class="tab-btn" data-target="tab-moves">Moves, EPT & Pacing</button>
+                    <button class="tab-btn" data-target="tab-calc">Stardust & Level Calculator</button>
+                    <button class="tab-btn" data-target="tab-overview">Base Stats & Evolutions</button>
+                </nav>
+
+                <!-- Profile Tab Content -->
+                <div class="tab-content">
+                    <!-- Tab 1: PvP & Tank Scale -->
+                    <div id="tab-pvp" class="tab-pane active">
+                        <h3>League Performance (100% Hundo Benchmark)</h3>
+                        
+                        <!-- Tankiness Slider -->
+                        <div class="tank-meter-container">
+                            <label>Tankiness Scale (0% Glass Cannon — 100% Ultimate Tank):</label>
+                            <div class="slider-wrapper">
+                                <div class="meter-track">
+                                    <div id="tank-bar" class="meter-fill" style="width: 50%;"></div>
+                                </div>
+                                <span id="tank-percent-label" class="slider-percent-text">50.0%</span>
+                            </div>
                         </div>
-                        <div class="move-column">
-                            <h4>Charged Moves (Power / Energy)</h4>
-                            <ul id="charged-moves-list"></ul>
+
+                        <div class="league-caps-grid">
+                            <div class="league-card" id="gl-card">
+                                <h4>Great League (1500 CP)</h4>
+                                <p id="gl-status">Checking eligibility...</p>
+                            </div>
+                            <div class="league-card" id="ul-card">
+                                <h4>Ultra League (2500 CP)</h4>
+                                <p id="ul-status">Checking eligibility...</p>
+                            </div>
+                            <div class="league-card" id="ml-card">
+                                <h4>Master League (3500 CP Cap)</h4>
+                                <p id="ml-status">Checking eligibility...</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Evolution Tab -->
-                <div id="tab-evolution" class="tab-pane">
-                    <h3>Evolution Chain</h3>
-                    <div id="evolution-chain" class="evolution-flex"></div>
+                    <!-- Tab 2: Moves & Speed -->
+                    <div id="tab-moves" class="tab-pane">
+                        <h3>Fast & Charged Moves</h3>
+                        <div class="moves-container">
+                            <div class="move-column">
+                                <h4>Fast Moves (Ranked by EPT)</h4>
+                                <ul id="fast-moves-list" class="moves-list"></ul>
+                            </div>
+                            <div class="move-column">
+                                <h4>Charged Moves & Fastest Pacing</h4>
+                                <ul id="charged-moves-list" class="moves-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Stardust & Candy Calculator -->
+                    <div id="tab-calc" class="tab-pane">
+                        <h3>Power-Up & Second Move Cost Calculator</h3>
+                        <div class="calc-form">
+                            <div class="form-group">
+                                <label for="calc-current-cp">Current CP:</label>
+                                <input type="number" id="calc-current-cp" placeholder="e.g. 800">
+                            </div>
+                            <div class="form-group">
+                                <label for="calc-target-league">Target League:</label>
+                                <select id="calc-target-league">
+                                    <option value="1500">Great League (1500 CP)</option>
+                                    <option value="2500">Ultra League (2500 CP)</option>
+                                    <option value="3500">Master League (3500 CP Cap)</option>
+                                </select>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="calc-is-lucky">
+                                <label for="calc-is-lucky">Lucky Pokémon (50% Stardust Discount)</label>
+                            </div>
+                            <button id="calc-btn">Calculate Power-Up Cost</button>
+                        </div>
+                        <div id="calc-results" class="calc-results-box hidden">
+                            <p><strong>Est. Stardust Needed:</strong> <span id="res-stardust">-</span></p>
+                            <p><strong>Est. Candy Needed:</strong> <span id="res-candy">-</span></p>
+                            <p><strong>2nd Move Cost:</strong> <span id="res-second-move">-</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Overview & Evolutions -->
+                    <div id="tab-overview" class="tab-pane">
+                        <h3>Base Stats & Dex Profile</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card"><span>Base Attack</span><strong id="stat-atk">-</strong></div>
+                            <div class="stat-card"><span>Base Defense</span><strong id="stat-def">-</strong></div>
+                            <div class="stat-card"><span>Base Stamina</span><strong id="stat-sta">-</strong></div>
+                        </div>
+                        <h4 style="margin-top: 1.5rem;">Evolution Chain</h4>
+                        <div id="evolution-chain" class="evolution-flex"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Beginner Tips Page -->
+        <div id="nav-tips" class="nav-page hidden">
+            <h2>Trainer Tips: Welcome to Competitive Pokémon GO!</h2>
+            <p>Our goal is to make competitive play fun, simple, and encouraging. Here are core rules to keep in mind:</p>
+            
+            <div class="tips-grid">
+                <div class="tip-card do-card">
+                    <h3>✅ DO THIS</h3>
+                    <ul>
+                        <li><strong>Save Your Stardust:</strong> Power up Pokémon only when you need them for an active team or cup.</li>
+                        <li><strong>Learn Fast Move Pacing:</strong> Count fast moves to predict when your opponent will fire a charged move!</li>
+                        <li><strong>Unlock 2nd Charged Moves:</strong> Having two charged move options gives you crucial type coverage.</li>
+                    </ul>
+                </div>
+                <div class="tip-card dont-card">
+                    <h3>❌ AVOID THIS</h3>
+                    <ul>
+                        <li><strong>Don't Purify Mindlessly:</strong> Shadow Pokémon get a +20% Attack boost that is super powerful in PvP!</li>
+                        <li><strong>Don't Waste Elite TMs:</strong> Save Elite Fast/Charged TMs for exclusive event-only moves on high-tier mons.</li>
+                        <li><strong>Don't Get Discouraged:</strong> Everyone loses battles! Learning team matchups takes practice and patience.</li>
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- About & Socials Page -->
+        <div id="nav-about" class="nav-page hidden">
+            <h2>About PokéUhmon</h2>
+            <div class="about-card">
+                <h3>Our Mission</h3>
+                <p>PokéUhmon was created to bring high-performance Pokémon GO battle data to everyone—without the toxicity, elitism, or overwhelming jargon. We believe in being kind, improving together, and supporting trainers of all skill levels.</p>
+                
+                <h3>Follow & Connect</h3>
+                <p>Stay tuned as we launch our official community channels:</p>
+                <div class="social-links">
+                    <span class="social-btn">Twitch (Coming Soon)</span>
+                    <span class="social-btn">TikTok (Coming Soon)</span>
+                    <span class="social-btn">Instagram (Coming Soon)</span>
+                    <span class="social-btn">YouTube (Coming Soon)</span>
+                </div>
+
+                <div class="support-section">
+                    <h3>Support the Project</h3>
+                    <p>If you find PokéUhmon helpful and want to help keep the servers running and tools growing, support links will be posted here soon! Thank you for being part of the journey. ❤️</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script src="app.js"></script>

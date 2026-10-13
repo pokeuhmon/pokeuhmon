@@ -9,8 +9,8 @@
 <body>
     <header class="site-header">
         <div class="header-content">
-            <h1>PokéUhmon</h1>
-            <p>High-Performance Pokémon GO Strategy, Hundo PvP Stats & Friendly Guidance</p>
+            <h1 class="logo-title">Poké<span class="logo-accent">Uhmon</span></h1>
+            <p class="tagline">High-Performance PvP Stats, Moves & Friendly Trainer Guidance</p>
             <nav class="main-nav">
                 <button class="nav-btn active" data-nav="nav-db">Database & PvP</button>
                 <button class="nav-btn" data-nav="nav-tips">Trainer Tips (Newbies Start Here)</button>
@@ -22,46 +22,69 @@
     <main class="container">
         <!-- Main Database View -->
         <div id="nav-db" class="nav-page active">
-            <!-- Search Section -->
+            <!-- Search Section with Autocomplete -->
             <section class="search-section">
                 <div class="search-box">
-                    <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Bastiodon, Haunter)..." autocomplete="off">
+                    <div class="input-wrapper">
+                        <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Vulpix, Bastiodon)..." autocomplete="off">
+                        <div id="autocomplete-list" class="autocomplete-items hidden"></div>
+                    </div>
                     <button id="search-btn">Search</button>
                 </div>
             </section>
 
-            <!-- Pokémon Profile Container (Hidden until searched) -->
+            <!-- Pokémon Profile Container -->
             <section id="pokemon-profile" class="profile-container hidden">
                 <div class="profile-header">
                     <img id="poke-sprite" src="" alt="Pokémon Sprite">
                     <div class="poke-titles">
-                        <span id="poke-id">#000</span>
-                        <h2 id="poke-name">Pokémon Name</h2>
-                        <div id="poke-types" class="type-badges"></div>
+                        <div class="title-row">
+                            <span id="poke-id">#000</span>
+                            <h2 id="poke-name">Pokémon Name</h2>
+                        </div>
+                        <div class="type-section">
+                            <div class="badge-group">
+                                <span class="group-label">Type:</span>
+                                <div id="poke-types" class="type-badges"></div>
+                            </div>
+                            <div class="badge-group">
+                                <span class="group-label">Weaknesses:</span>
+                                <div id="poke-weaknesses" class="type-badges"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- PokéUhmon's Personal Take Note -->
-                <div class="take-note-box">
-                    <h3>💡 PokéUhmon's Take</h3>
-                    <p id="poke-take-text">Searching for custom insights...</p>
-                </div>
-
-                <!-- Sub-Tabs for Pokémon Profile -->
+                <!-- Sub-Tabs (Moves Focused First) -->
                 <nav class="profile-tabs">
-                    <button class="tab-btn active" data-target="tab-pvp">PvP Rankings & Tank Scale</button>
-                    <button class="tab-btn" data-target="tab-moves">Moves, EPT & Pacing</button>
+                    <button class="tab-btn active" data-target="tab-moves">Moves, EPT & Pacing</button>
+                    <button class="tab-btn" data-target="tab-pvp">PvP Rankings & Tank Scale</button>
                     <button class="tab-btn" data-target="tab-calc">Stardust & Level Calculator</button>
                     <button class="tab-btn" data-target="tab-overview">Base Stats & Evolutions</button>
                 </nav>
 
                 <!-- Profile Tab Content -->
                 <div class="tab-content">
-                    <!-- Tab 1: PvP & Tank Scale -->
-                    <div id="tab-pvp" class="tab-pane active">
-                        <h3>League Performance (100% Hundo Benchmark)</h3>
+                    <!-- Tab 1: Moves & Speed (Primary Focus) -->
+                    <div id="tab-moves" class="tab-pane active">
+                        <h3>Fast & Charged Moves Pacing</h3>
+                        <div class="moves-container">
+                            <div class="move-column">
+                                <h4>Fast Moves (Ranked by EPT)</h4>
+                                <ul id="fast-moves-list" class="moves-list"></ul>
+                            </div>
+                            <div class="move-column">
+                                <h4>Charged Moves & Speed Pacing</h4>
+                                <ul id="charged-moves-list" class="moves-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: PvP & Tank Scale -->
+                    <div id="tab-pvp" class="tab-pane">
+                        <h3>League Performance</h3>
                         
-                        <!-- Tankiness Slider -->
+                        <!-- Tankiness Scale Bar -->
                         <div class="tank-meter-container">
                             <label>Tankiness Scale (0% Glass Cannon — 100% Ultimate Tank):</label>
                             <div class="slider-wrapper">
@@ -88,24 +111,9 @@
                         </div>
                     </div>
 
-                    <!-- Tab 2: Moves & Speed -->
-                    <div id="tab-moves" class="tab-pane">
-                        <h3>Fast & Charged Moves</h3>
-                        <div class="moves-container">
-                            <div class="move-column">
-                                <h4>Fast Moves (Ranked by EPT)</h4>
-                                <ul id="fast-moves-list" class="moves-list"></ul>
-                            </div>
-                            <div class="move-column">
-                                <h4>Charged Moves & Fastest Pacing</h4>
-                                <ul id="charged-moves-list" class="moves-list"></ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Tab 3: Stardust & Candy Calculator -->
                     <div id="tab-calc" class="tab-pane">
-                        <h3>Power-Up & Second Move Cost Calculator</h3>
+                        <h3>Power-Up & Second Move Calculator</h3>
                         <div class="calc-form">
                             <div class="form-group">
                                 <label for="calc-current-cp">Current CP:</label>
@@ -140,9 +148,15 @@
                             <div class="stat-card"><span>Base Defense</span><strong id="stat-def">-</strong></div>
                             <div class="stat-card"><span>Base Stamina</span><strong id="stat-sta">-</strong></div>
                         </div>
-                        <h4 style="margin-top: 1.5rem;">Evolution Chain</h4>
+                        <h4 style="margin-top: 1.5rem;">Evolution Family (Click to View)</h4>
                         <div id="evolution-chain" class="evolution-flex"></div>
                     </div>
+                </div>
+
+                <!-- PokéUhmon's Personal Take Note (Moved to Bottom) -->
+                <div class="take-note-box">
+                    <h3>💡 PokéUhmon's Take</h3>
+                    <p id="poke-take-text">Coming Soon!</p>
                 </div>
             </section>
         </div>
@@ -177,7 +191,7 @@
             <h2>About PokéUhmon</h2>
             <div class="about-card">
                 <h3>Our Mission</h3>
-                <p>PokéUhmon was created to bring high-performance Pokémon GO battle data to everyone—without the toxicity, elitism, or overwhelming jargon. We believe in being kind, improving together, and supporting trainers of all skill levels.</p>
+                <p>PokéUhmon was created to bring high-performance Pokémon GO battle data to everyone—without toxicity, elitism, or overwhelming jargon. We believe in being kind, improving together, and supporting trainers of all skill levels.</p>
                 
                 <h3>Follow & Connect</h3>
                 <p>Stay tuned as we launch our official community channels:</p>
@@ -190,7 +204,7 @@
 
                 <div class="support-section">
                     <h3>Support the Project</h3>
-                    <p>If you find PokéUhmon helpful and want to help keep the servers running and tools growing, support links will be posted here soon! Thank you for being part of the journey. ❤️</p>
+                    <p>If you find PokéUhmon helpful and want to help keep the tools growing, support links will be posted here soon! Thank you for being part of the journey. ❤️</p>
                 </div>
             </div>
         </div>

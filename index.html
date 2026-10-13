@@ -26,7 +26,7 @@
             <section class="search-section">
                 <div class="search-box">
                     <div class="input-wrapper">
-                        <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Vulpix, Bastiodon)..." autocomplete="off">
+                        <input type="text" id="pokemon-search" placeholder="Search Pokémon (e.g., Azumarill, Vulpix, Pikachu)..." autocomplete="off">
                         <div id="autocomplete-list" class="autocomplete-items hidden"></div>
                     </div>
                     <button id="search-btn">Search</button>
@@ -36,7 +36,16 @@
             <!-- Pokémon Profile Container -->
             <section id="pokemon-profile" class="profile-container hidden">
                 <div class="profile-header">
-                    <img id="poke-sprite" src="" alt="Pokémon Sprite">
+                    <div class="sprite-duo">
+                        <div class="sprite-box">
+                            <img id="poke-sprite" src="" alt="Regular Sprite">
+                            <span class="sprite-label">Normal</span>
+                        </div>
+                        <div class="sprite-box shiny-box">
+                            <img id="poke-sprite-shiny" src="" alt="Shiny Sprite">
+                            <span class="sprite-label shiny-label">✨ Shiny</span>
+                        </div>
+                    </div>
                     <div class="poke-titles">
                         <div class="title-row">
                             <span id="poke-id">#000</span>
@@ -55,7 +64,7 @@
                     </div>
                 </div>
 
-                <!-- Sub-Tabs (Moves Focused First) -->
+                <!-- Sub-Tabs -->
                 <nav class="profile-tabs">
                     <button class="tab-btn active" data-target="tab-moves">Moves, EPT & Pacing</button>
                     <button class="tab-btn" data-target="tab-pvp">PvP Rankings & Tank Scale</button>
@@ -65,7 +74,7 @@
 
                 <!-- Profile Tab Content -->
                 <div class="tab-content">
-                    <!-- Tab 1: Moves & Speed (Primary Focus) -->
+                    <!-- Tab 1: Moves & Speed -->
                     <div id="tab-moves" class="tab-pane active">
                         <h3>Fast & Charged Moves Pacing</h3>
                         <div class="moves-container">
@@ -84,7 +93,6 @@
                     <div id="tab-pvp" class="tab-pane">
                         <h3>League Performance</h3>
                         
-                        <!-- Tankiness Scale Bar -->
                         <div class="tank-meter-container">
                             <label>Tankiness Scale (0% Glass Cannon — 100% Ultimate Tank):</label>
                             <div class="slider-wrapper">
@@ -140,7 +148,7 @@
                         </div>
                     </div>
 
-                    <!-- Tab 4: Overview & Evolutions -->
+                    <!-- Tab 4: Overview, Pokédex Entry & Evolutions -->
                     <div id="tab-overview" class="tab-pane">
                         <h3>Base Stats & Dex Profile</h3>
                         <div class="stats-grid">
@@ -148,12 +156,19 @@
                             <div class="stat-card"><span>Base Defense</span><strong id="stat-def">-</strong></div>
                             <div class="stat-card"><span>Base Stamina</span><strong id="stat-sta">-</strong></div>
                         </div>
+
+                        <!-- Pokédex Entry Box -->
+                        <div class="pokedex-entry-card">
+                            <h4>📖 Pokédex Entry</h4>
+                            <p id="pokedex-flavor-text">Loading entry description...</p>
+                        </div>
+
                         <h4 style="margin-top: 1.5rem;">Evolution Family (Click to View)</h4>
                         <div id="evolution-chain" class="evolution-flex"></div>
                     </div>
                 </div>
 
-                <!-- PokéUhmon's Personal Take Note (Moved to Bottom) -->
+                <!-- PokéUhmon's Personal Take Note -->
                 <div class="take-note-box">
                     <h3>💡 PokéUhmon's Take</h3>
                     <p id="poke-take-text">Coming Soon!</p>

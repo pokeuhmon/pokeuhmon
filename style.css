@@ -44,7 +44,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* Main Navigation Buttons */
+/* Main Navigation */
 .main-nav {
     display: flex;
     justify-content: center;
@@ -167,7 +167,7 @@ body {
     background: #d62828;
 }
 
-/* Profile Container */
+/* Profile Container & Duo Sprites */
 .profile-container {
     background: var(--bg-card);
     border-radius: 12px;
@@ -181,15 +181,38 @@ body {
     align-items: center;
     gap: 1.5rem;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
-#poke-sprite {
-    width: 110px;
-    height: 110px;
+.sprite-duo {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.sprite-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background: var(--bg-inner);
-    border-radius: 50%;
     padding: 0.5rem;
-    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.sprite-box img {
+    width: 85px;
+    height: 85px;
+}
+
+.sprite-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.shiny-label {
+    color: #b45309;
 }
 
 .poke-titles {
@@ -391,6 +414,28 @@ body {
     color: var(--text-primary);
 }
 
+/* Pokédex Entry Card */
+.pokedex-entry-card {
+    background: var(--bg-inner);
+    border-left: 4px solid var(--accent-blue);
+    padding: 1.25rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.pokedex-entry-card h4 {
+    margin: 0 0 0.4rem 0;
+    color: var(--accent-blue);
+}
+
+.pokedex-entry-card p {
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-style: italic;
+}
+
 /* PokéUhmon's Take Box */
 .take-note-box {
     background: #fefce8;
@@ -441,6 +486,12 @@ body {
 .evo-card img {
     width: 60px;
     height: 60px;
+}
+
+.evo-arrow {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    font-weight: bold;
 }
 
 /* Trainer Tips & Social Cards */

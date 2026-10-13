@@ -1,14 +1,14 @@
-/* --- Pokémon-Inspired Warmer Theme --- */
+/* --- Clean Light Mode Theme (PokéBall Red & Gold Accents) --- */
 :root {
-    --bg-main: #0b132b;
-    --bg-card: #1c2541;
-    --bg-inner: #0f172a;
-    --accent-blue: #00f2fe;
-    --accent-red: #ff4b4b;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-inner: #f1f5f9;
+    --accent-red: #e63946;
     --accent-yellow: #ffb703;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --border-color: #334155;
+    --accent-blue: #0284c7;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
 }
 
 body {
@@ -22,21 +22,20 @@ body {
 .site-header {
     text-align: center;
     padding: 2rem 1rem;
-    background: #151e3d;
-    border-bottom: 2px solid #2a3763;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    background: var(--bg-card);
+    border-bottom: 3px solid var(--accent-red);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .logo-title {
     margin: 0;
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 2.5rem;
-    letter-spacing: 1px;
+    letter-spacing: -0.5px;
 }
 
 .logo-accent {
-    color: var(--accent-blue);
-    text-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+    color: var(--accent-red);
 }
 
 .tagline {
@@ -45,7 +44,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* Main Navigation Pills */
+/* Main Navigation Buttons */
 .main-nav {
     display: flex;
     justify-content: center;
@@ -55,9 +54,9 @@ body {
 }
 
 .nav-btn {
-    background: var(--bg-main);
+    background: var(--bg-inner);
     border: 1px solid var(--border-color);
-    color: #cbd5e1;
+    color: var(--text-primary);
     padding: 0.6rem 1.25rem;
     border-radius: 20px;
     font-weight: 600;
@@ -66,14 +65,14 @@ body {
 }
 
 .nav-btn:hover {
-    border-color: var(--accent-blue);
-    color: var(--accent-blue);
+    border-color: var(--accent-red);
+    color: var(--accent-red);
 }
 
 .nav-btn.active {
-    background: var(--accent-blue);
-    color: #0b132b;
-    border-color: var(--accent-blue);
+    background: var(--accent-red);
+    color: #ffffff;
+    border-color: var(--accent-red);
     font-weight: bold;
 }
 
@@ -108,60 +107,64 @@ body {
 
 .search-box input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    color: #fff;
+    border: 2px solid var(--border-color);
+    background: #ffffff;
+    color: var(--text-primary);
     font-size: 1rem;
     box-sizing: border-box;
 }
 
 .search-box input:focus {
     outline: none;
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+    border-color: var(--accent-red);
+    box-shadow: 0 0 8px rgba(230, 57, 70, 0.2);
 }
 
 .autocomplete-items {
     position: absolute;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--accent-red);
     border-top: none;
     z-index: 99;
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--bg-card);
+    background: #ffffff;
     border-radius: 0 0 8px 8px;
-    max-height: 200px;
+    max-height: 220px;
     overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 .autocomplete-items div {
-    padding: 10px;
+    padding: 10px 14px;
     cursor: pointer;
     color: var(--text-primary);
-    border-bottom: 1px solid #2a3763;
+    border-bottom: 1px solid var(--bg-inner);
+    font-weight: 500;
 }
 
 .autocomplete-items div:hover {
-    background-color: #2a3763;
-    color: var(--accent-blue);
+    background-color: #fef2f2;
+    color: var(--accent-red);
+    font-weight: bold;
 }
 
 .search-box button {
-    padding: 0.75rem 1.5rem;
+    padding: 0.85rem 1.75rem;
     border-radius: 8px;
     border: none;
-    background: var(--accent-blue);
-    color: #0b132b;
+    background: var(--accent-red);
+    color: #ffffff;
     font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .search-box button:hover {
-    background: #00c6ff;
+    background: #d62828;
 }
 
 /* Profile Container */
@@ -170,7 +173,7 @@ body {
     border-radius: 12px;
     padding: 2rem;
     border: 1px solid var(--border-color);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
 .profile-header {
@@ -200,14 +203,16 @@ body {
 }
 
 #poke-id {
-    color: var(--accent-yellow);
+    color: var(--accent-red);
     font-weight: bold;
+    font-size: 1.1rem;
 }
 
 #poke-name {
     margin: 0;
-    font-size: 1.8rem;
-    letter-spacing: 0.5px;
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
 }
 
 /* Type & Weakness Badges */
@@ -225,9 +230,10 @@ body {
 }
 
 .group-label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    min-width: 80px;
+    min-width: 85px;
+    font-weight: 600;
 }
 
 .type-badges {
@@ -237,35 +243,35 @@ body {
 }
 
 .type-badge {
-    padding: 3px 8px;
-    border-radius: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: #fff;
+    color: #ffffff;
 }
 
-/* Type Specific Colors */
-.type-fire { background: #ff4b4b; }
-.type-water { background: #38bdf8; }
-.type-grass { background: #22c55e; }
-.type-electric { background: #eab308; }
-.type-ice { background: #06b6d4; }
-.type-fighting { background: #f97316; }
-.type-poison { background: #a855f7; }
-.type-ground { background: #d97706; }
-.type-flying { background: #818cf8; }
-.type-psychic { background: #ec4899; }
-.type-bug { background: #84cc16; }
-.type-rock { background: #b45309; }
-.type-ghost { background: #6366f1; }
-.type-dragon { background: #4f46e5; }
-.type-steel { background: #64748b; }
-.type-fairy { background: #f472b6; }
-.type-normal { background: #94a3b8; }
-.type-dark { background: #334155; }
+/* Type Colors */
+.type-fire { background: #e63946; }
+.type-water { background: #0284c7; }
+.type-grass { background: #16a34a; }
+.type-electric { background: #d97706; }
+.type-ice { background: #0891b2; }
+.type-fighting { background: #ea580c; }
+.type-poison { background: #9333ea; }
+.type-ground { background: #b45309; }
+.type-flying { background: #6366f1; }
+.type-psychic { background: #db2777; }
+.type-bug { background: #65a30d; }
+.type-rock { background: #854d0e; }
+.type-ghost { background: #4f46e5; }
+.type-dragon { background: #4338ca; }
+.type-steel { background: #475569; }
+.type-fairy { background: #ec4899; }
+.type-normal { background: #64748b; }
+.type-dark { background: #1e293b; }
 
-/* Profile Sub-Tabs */
+/* Sub-Tabs */
 .profile-tabs {
     display: flex;
     gap: 0.5rem;
@@ -285,8 +291,8 @@ body {
 }
 
 .tab-btn.active {
-    color: var(--accent-blue);
-    border-bottom: 2px solid var(--accent-blue);
+    color: var(--accent-red);
+    border-bottom: 3px solid var(--accent-red);
     margin-bottom: -2px;
 }
 
@@ -309,8 +315,8 @@ body {
 
 .tank-meter-container label {
     display: block;
-    color: #cbd5e1;
-    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
 }
@@ -323,23 +329,23 @@ body {
 
 .meter-track {
     flex: 1;
-    height: 16px;
-    background: #2a3763;
-    border-radius: 8px;
+    height: 18px;
+    background: #e2e8f0;
+    border-radius: 9px;
     overflow: hidden;
 }
 
 .meter-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ff4b4b 0%, #ffb703 50%, #22c55e 100%);
-    border-radius: 8px;
+    background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+    border-radius: 9px;
     transition: width 0.4s ease;
 }
 
 .slider-percent-text {
     font-weight: bold;
-    color: var(--accent-blue);
-    font-size: 1.1rem;
+    color: var(--accent-red);
+    font-size: 1.15rem;
     min-width: 60px;
 }
 
@@ -359,7 +365,7 @@ body {
 
 .league-card h4 {
     margin: 0 0 0.5rem 0;
-    color: var(--accent-blue);
+    color: var(--text-primary);
 }
 
 /* Moves Lists */
@@ -382,26 +388,28 @@ body {
     border: 1px solid var(--border-color);
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
+    color: var(--text-primary);
 }
 
-/* PokéUhmon's Take Box (At Bottom) */
+/* PokéUhmon's Take Box */
 .take-note-box {
-    background: var(--bg-inner);
+    background: #fefce8;
     border-left: 4px solid var(--accent-yellow);
     padding: 1.25rem;
     border-radius: 6px;
     margin-top: 2rem;
+    border: 1px solid #fef08a;
 }
 
 .take-note-box h3 {
     margin: 0 0 0.4rem 0;
-    color: var(--accent-yellow);
+    color: #b45309;
     font-size: 1.1rem;
 }
 
 .take-note-box p {
     margin: 0;
-    color: #e2e8f0;
+    color: #78350f;
     line-height: 1.5;
     font-style: italic;
 }
@@ -422,11 +430,12 @@ body {
     border-radius: 8px;
     text-align: center;
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .evo-card:hover {
-    border-color: var(--accent-blue);
+    border-color: var(--accent-red);
+    transform: translateY(-2px);
 }
 
 .evo-card img {
@@ -449,8 +458,8 @@ body {
     border: 1px solid var(--border-color);
 }
 
-.do-card { border-top: 4px solid #22c55e; }
-.dont-card { border-top: 4px solid #ff4b4b; }
+.do-card { border-top: 4px solid #16a34a; }
+.dont-card { border-top: 4px solid #dc2626; }
 
 .about-card {
     background: var(--bg-card);
@@ -468,11 +477,12 @@ body {
 
 .social-btn {
     background: var(--bg-inner);
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
+    border: 1px solid var(--accent-red);
+    color: var(--accent-red);
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .stats-grid {

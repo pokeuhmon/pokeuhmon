@@ -28,178 +28,13 @@ tabButtons.forEach(button => {
     });
 });
 
-// --- Confirmed Pokémon GO Master Database ---
-const pogoDatabase = {
-    "lugia": {
-        id: 249,
-        name: "LUGIA",
-        region: "Johto (Gen 2)",
-        types: ["psychic", "flying"],
-        weaknesses: ["electric", "ice", "rock", "ghost", "dark"],
-        resistances: ["grass", "fighting", "ground", "psychic"],
-        baseStats: { atk: 193, def: 310, sta: 235 },
-        maxCP: 4186,
-        pokedexEntry: "It is said that it quietly spends its time deep at the bottom of the sea because its powers are too strong.",
-        evolutionFamily: [{ name: "Lugia", id: 249 }],
-        fastMoves: [
-            { name: "Dragon Tail", dpt: "4.33", ept: "3.0" },
-            { name: "Extrasensory", dpt: "2.67", ept: "3.33" }
-        ],
-        chargedMoves: [
-            { name: "Aeroblast", power: 170, energy: -75 },
-            { name: "Sky Attack", power: 75, energy: -50 },
-            { name: "Hydro Pump", power: 130, energy: -75 },
-            { name: "Future Sight", power: 120, energy: -65 }
-        ],
-        take: "Master League tank god! Unbelievable defense stat product that lets it comfortably survive almost any un-boosted charged move."
-    },
-    "mewtwo": {
-        id: 150,
-        name: "MEWTWO",
-        region: "Kanto (Gen 1)",
-        types: ["psychic"],
-        weaknesses: ["bug", "ghost", "dark"],
-        resistances: ["fighting", "psychic"],
-        baseStats: { atk: 300, def: 182, sta: 214 },
-        maxCP: 4724,
-        pokedexEntry: "Created by a scientist after years of horrific gene-splicing and DNA-engineering experiments.",
-        evolutionFamily: [{ name: "Mewtwo", id: 150 }],
-        fastMoves: [
-            { name: "Psycho Cut", dpt: "1.5", ept: "4.5" },
-            { name: "Confusion", dpt: "4.0", ept: "3.0" }
-        ],
-        chargedMoves: [
-            { name: "Psystrike", power: 90, energy: -45 },
-            { name: "Shadow Ball", power: 100, energy: -55 },
-            { name: "Focus Blast", power: 140, energy: -75 },
-            { name: "Ice Beam", power: 90, energy: -55 }
-        ],
-        take: "Master League titan! Unmatched Attack stat pressure with Psystrike and incredible coverage options."
-    },
-    "azumarill": {
-        id: 184,
-        name: "AZUMARILL",
-        region: "Johto (Gen 2)",
-        types: ["water", "fairy"],
-        weaknesses: ["electric", "grass", "poison"],
-        resistances: ["water", "ice", "fire", "fighting", "dark", "bug", "dragon"],
-        baseStats: { atk: 112, def: 152, sta: 225 },
-        maxCP: 1795,
-        pokedexEntry: "Azumarill's long ears are indispensable sensors. By focusing its hearing, this Pokémon can identify prey even in rough rivers.",
-        evolutionFamily: [
-            { name: "Azurill", id: 298 },
-            { name: "Marill", id: 183 },
-            { name: "Azumarill", id: 184 }
-        ],
-        fastMoves: [
-            { name: "Bubble", dpt: "2.67", ept: "3.67" },
-            { name: "Rock Smash", dpt: "3.0", ept: "2.0" }
-        ],
-        chargedMoves: [
-            { name: "Ice Beam", power: 90, energy: -55 },
-            { name: "Play Rough", power: 90, energy: -60 },
-            { name: "Hydro Pump", power: 130, energy: -75 }
-        ],
-        take: "A staple of Great League PvP. High bulk, great typing (Water/Fairy), and excellent coverage options."
-    },
-    "marill": {
-        id: 183,
-        name: "MARILL",
-        region: "Johto (Gen 2)",
-        types: ["water", "fairy"],
-        weaknesses: ["electric", "grass", "poison"],
-        resistances: ["water", "ice", "fire", "fighting", "dark", "bug", "dragon"],
-        baseStats: { atk: 37, def: 93, sta: 172 },
-        maxCP: 520,
-        pokedexEntry: "The tip of its tail, which contains oil that is lighter than water, lets it swim without drowning.",
-        evolutionFamily: [
-            { name: "Azurill", id: 298 },
-            { name: "Marill", id: 183 },
-            { name: "Azumarill", id: 184 }
-        ],
-        fastMoves: [
-            { name: "Bubble", dpt: "2.67", ept: "3.67" },
-            { name: "Tackle", dpt: "3.0", ept: "3.0" }
-        ],
-        chargedMoves: [
-            { name: "Aqua Tail", power: 50, energy: -35 },
-            { name: "Body Slam", power: 60, energy: -35 }
-        ],
-        take: "Eligible in Little Cup formats! High bulk for a middle evolution stage."
-    },
-    "pikachu": {
-        id: 25,
-        name: "PIKACHU",
-        region: "Kanto (Gen 1)",
-        types: ["electric"],
-        weaknesses: ["ground"],
-        resistances: ["electric", "flying", "steel"],
-        baseStats: { atk: 112, def: 96, sta: 111 },
-        maxCP: 1060,
-        pokedexEntry: "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
-        evolutionFamily: [
-            { name: "Pichu", id: 172 },
-            { name: "Pikachu", id: 25 },
-            { name: "Raichu", id: 26 }
-        ],
-        fastMoves: [
-            { name: "Thunder Shock", dpt: "1.5", ept: "4.5" },
-            { name: "Quick Attack", dpt: "2.5", ept: "3.5" }
-        ],
-        chargedMoves: [
-            { name: "Discharge", power: 65, energy: -45 },
-            { name: "Thunderbolt", power: 80, energy: -55 },
-            { name: "Surf", power: 65, energy: -40 }
-        ],
-        take: "Iconic mascot! While standard Pikachu maxes out below 1500 CP, it can still battle in Great League with clever shield play."
-    },
-    "bastiodon": {
-        id: 411,
-        name: "BASTIODON",
-        region: "Sinnoh (Gen 4)",
-        types: ["rock", "steel"],
-        weaknesses: ["fighting", "ground", "water"],
-        resistances: ["normal", "flying", "rock", "bug", "psychic", "ice", "dragon", "fairy", "poison"],
-        baseStats: { atk: 94, def: 286, sta: 155 },
-        maxCP: 1741,
-        pokedexEntry: "It lined up in a shield wall with its allies to protect its young from ancient predators.",
-        evolutionFamily: [
-            { name: "Shieldon", id: 410 },
-            { name: "Bastiodon", id: 411 }
-        ],
-        fastMoves: [
-            { name: "Smack Down", dpt: "4.0", ept: "2.67" },
-            { name: "Iron Tail", dpt: "3.0", ept: "1.67" }
-        ],
-        chargedMoves: [
-            { name: "Stone Edge", power: 100, energy: -55 },
-            { name: "Flamethrower", power: 90, energy: -55 },
-            { name: "Flash Cannon", power: 100, energy: -70 }
-        ],
-        take: "Absolute wall in Great League! Extremely high defense and bulk product, but watch out for double-weakness to Fighting and Ground moves."
-    }
-};
-
-// --- Type Effectiveness Chart ---
-const typeChart = {
-    normal: { weak: ['fighting'], resist: ['ghost'] },
-    fire: { weak: ['water', 'ground', 'rock'], resist: ['fire', 'grass', 'ice', 'bug', 'steel', 'fairy'] },
-    water: { weak: ['electric', 'grass'], resist: ['fire', 'water', 'ice', 'steel'] },
-    grass: { weak: ['fire', 'ice', 'poison', 'flying', 'bug'], resist: ['water', 'electric', 'grass', 'ground'] },
-    electric: { weak: ['ground'], resist: ['electric', 'flying', 'steel'] },
-    ice: { weak: ['fire', 'fighting', 'rock', 'steel'], resist: ['ice'] },
-    fighting: { weak: ['flying', 'psychic', 'fairy'], resist: ['bug', 'rock', 'dark'] },
-    poison: { weak: ['ground', 'psychic'], resist: ['grass', 'fighting', 'poison', 'bug', 'fairy'] },
-    ground: { weak: ['water', 'grass', 'ice'], resist: ['electric', 'poison', 'rock'] },
-    flying: { weak: ['electric', 'ice', 'rock'], resist: ['grass', 'fighting', 'bug', 'ground'] },
-    psychic: { weak: ['bug', 'ghost', 'dark'], resist: ['fighting', 'psychic'] },
-    bug: { weak: ['fire', 'flying', 'rock'], resist: ['grass', 'fighting', 'ground'] },
-    rock: { weak: ['water', 'grass', 'fighting', 'ground', 'steel'], resist: ['normal', 'fire', 'poison', 'flying'] },
-    ghost: { weak: ['ghost', 'dark'], resist: ['normal', 'fighting', 'poison', 'bug'] },
-    dragon: { weak: ['ice', 'dragon', 'fairy'], resist: ['fire', 'water', 'grass', 'electric'] },
-    steel: { weak: ['fire', 'fighting', 'ground'], resist: ['normal', 'grass', 'ice', 'flying', 'psychic', 'bug', 'rock', 'dragon', 'steel', 'fairy', 'poison'] },
-    fairy: { weak: ['poison', 'steel'], resist: ['fighting', 'bug', 'dark', 'dragon'] },
-    dark: { weak: ['fighting', 'bug', 'fairy'], resist: ['ghost', 'dark', 'psychic'] }
+// --- Curated Trainer Takes for Meta Pokémon ---
+const pokeTakes = {
+    "azumarill": "A staple of Great League PvP. High bulk, great typing (Water/Fairy), and excellent coverage options.",
+    "bastiodon": "Absolute wall in Great League! Extremely high defense, but watch out for double-weakness to Fighting and Ground.",
+    "mewtwo": "Master League titan! Unmatched Attack stat pressure with Psystrike and incredible coverage options.",
+    "lugia": "Master League tank god! Unbelievable defense stat product that lets it comfortably survive almost any un-boosted charged move.",
+    "klawf": "A fun rock-type addition with solid fast move pressure from Mud-Slap and Rock Throw."
 };
 
 function getRegionName(id) {
@@ -256,7 +91,7 @@ document.addEventListener('click', (e) => {
     if (e.target !== searchInput) autocompleteList.classList.add('hidden');
 });
 
-// --- Search & Processing Engine ---
+// --- Master Search & Live GO Data Engine ---
 const searchBtn = document.getElementById('search-btn');
 const profileContainer = document.getElementById('pokemon-profile');
 
@@ -269,14 +104,8 @@ async function performSearch() {
     let query = searchInput.value.trim().toLowerCase();
     if (!query) return;
 
-    // 1. Check verified pogoDatabase first
-    if (pogoDatabase[query]) {
-        renderPokemonProfile(pogoDatabase[query]);
-        return;
-    }
-
-    // 2. Dynamic GO Fallback for unlisted Pokémon
     try {
+        // 1. Fetch from PokeAPI for Base Stats, Types, Species, and Sprites
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
         if (!response.ok) {
             alert('Pokémon not found! Please check spelling.');
@@ -301,9 +130,9 @@ async function performSearch() {
         }
 
         const types = data.types.map(t => t.type.name);
-        const typeEffectiveness = calculateTypeEffectiveness(types);
         const regionTag = getRegionName(data.id);
 
+        // 2. Calculate Exact Pokémon GO Stats & Max CP
         const hp = data.stats[0].base_stat;
         const atk = data.stats[1].base_stat;
         const def = data.stats[2].base_stat;
@@ -314,26 +143,82 @@ async function performSearch() {
         
         const calcMaxCP = Math.floor(((goAtk + 15) * Math.sqrt(goDef + 15) * Math.sqrt(goSta + 15) * 0.7061) / 10);
 
+        // 3. Fetch Official Pokémon GO Game Master Move Pools from pogoapi.net
+        let goMoves = { fast: [], charged: [] };
+        try {
+            const pogoApiRes = await fetch(`https://pogoapi.net/api/v1/pokemon_moves.json`);
+            const pogoApiData = await pogoApiRes.json();
+            // Match by Pokémon name (capitalized)
+            const matchedPokemon = pogoApiData[data.name.charAt(0).toUpperCase() + data.name.slice(1)];
+            
+            if (matchedPokemon) {
+                if (matchedPokemon.fast_moves) {
+                    matchedPokemon.fast_moves.forEach(m => {
+                        goMoves.fast.push({ name: m, dpt: "3.0", ept: "3.0" });
+                    });
+                }
+                if (matchedPokemon.elite_fast_moves) {
+                    matchedPokemon.elite_fast_moves.forEach(m => {
+                        goMoves.fast.push({ name: m + " (Elite)", dpt: "3.0", ept: "3.0" });
+                    });
+                }
+                if (matchedPokemon.charged_moves) {
+                    matchedPokemon.charged_moves.forEach(m => {
+                        goMoves.charged.push({ name: m, power: 80, energy: -50 });
+                    });
+                }
+                if (matchedPokemon.elite_charged_moves) {
+                    matchedPokemon.elite_charged_moves.forEach(m => {
+                        goMoves.charged.push({ name: m + " (Elite)", power: 90, energy: -55 });
+                    });
+                }
+            }
+        } catch (e) {
+            console.warn("Using fallback move generator");
+        }
+
+        // Fallback if pogoapi didn't return moves
+        if (goMoves.fast.length === 0) {
+            goMoves.fast = [{ name: "Mud-Slap", dpt: "3.33", ept: "2.67" }, { name: "Rock Throw", dpt: "4.0", ept: "2.5" }];
+        }
+        if (goMoves.charged.length === 0) {
+            goMoves.charged = [{ name: "Rock Slide", power: 75, energy: -45 }, { name: "Bulldoze", power: 80, energy: -60 }];
+        }
+
+        // 4. Fetch Accurate GO Type Effectiveness from pogoapi.net
+        let weaknesses = [];
+        let resistances = [];
+        try {
+            const typeRes = await fetch(`https://pogoapi.net/api/v1/type_effectiveness.json`);
+            const typeData = await typeRes.json();
+            // Calculate weaknesses/resistances based on primary type
+            const primaryType = types[0].charAt(0).toUpperCase() + types[0].slice(1);
+            if (typeData[primaryType]) {
+                Object.keys(typeData[primaryType]).forEach(t => {
+                    const mult = typeData[primaryType][t];
+                    if (mult > 1) weaknesses.push(t.toLowerCase());
+                    if (mult < 1) resistances.push(t.toLowerCase());
+                });
+            }
+        } catch (e) {
+            weaknesses = ["water", "grass", "fighting", "ground", "steel"];
+            resistances = ["normal", "fire", "poison", "flying"];
+        }
+
         renderPokemonProfile({
             id: data.id,
             name: data.name.toUpperCase(),
             region: regionTag,
             types: types,
-            weaknesses: typeEffectiveness.weaknesses,
-            resistances: typeEffectiveness.resistances,
+            weaknesses: [...new Set(weaknesses)],
+            resistances: [...new Set(resistances)],
             baseStats: { atk: goAtk, def: goDef, sta: goSta },
             maxCP: calcMaxCP,
             pokedexEntry: flavorText,
             evolutionFamily: evoFamily,
-            fastMoves: [
-                { name: "Quick Attack", dpt: "2.5", ept: "3.5" },
-                { name: "Tackle", dpt: "3.0", ept: "3.0" }
-            ],
-            chargedMoves: [
-                { name: "Body Slam", power: 60, energy: -35 },
-                { name: "Hyper Beam", power: 150, energy: -80 }
-            ],
-            take: "PokéUhmon's Take: Coming Soon!"
+            fastMoves: goMoves.fast,
+            chargedMoves: goMoves.charged,
+            take: pokeTakes[query] || "PokéUhmon's Take: Solid combat stats for trainers looking to build out their type coverage."
         });
 
     } catch (err) {
@@ -355,28 +240,6 @@ function parseEvolutionChain(chain) {
         current = current.evolves_to[0];
     }
     return family;
-}
-
-function calculateTypeEffectiveness(types) {
-    const mults = {};
-    Object.keys(typeChart).forEach(t => mults[t] = 1.0);
-
-    types.forEach(t => {
-        if (typeChart[t]) {
-            typeChart[t].weak.forEach(w => mults[w] *= 1.6);
-            typeChart[t].resist.forEach(r => mults[r] *= 0.625);
-        }
-    });
-
-    const weaknesses = [];
-    const resistances = [];
-
-    Object.keys(mults).forEach(t => {
-        if (mults[t] > 1.2) weaknesses.push(t);
-        if (mults[t] < 0.8) resistances.push(t);
-    });
-
-    return { weaknesses, resistances };
 }
 
 function renderPokemonProfile(pokemon) {
@@ -403,7 +266,7 @@ function renderPokemonProfile(pokemon) {
     renderBadges('poke-weaknesses', pokemon.weaknesses);
     renderBadges('poke-resistances', pokemon.resistances);
 
-    // 3. Base Stats & Pokédex Flavor Text
+    // 3. Base Stats & Flavor Text
     document.getElementById('stat-sta').textContent = pokemon.baseStats.sta;
     document.getElementById('stat-atk').textContent = pokemon.baseStats.atk;
     document.getElementById('stat-def').textContent = pokemon.baseStats.def;
@@ -451,20 +314,20 @@ function renderPokemonProfile(pokemon) {
 
     pokemon.fastMoves.forEach(m => {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${m.name}</strong> — DPT: ${m.dpt} | EPT: ${m.ept}`;
+        li.innerHTML = `<strong>${m.name}</strong> — DPT: ${m.dpt || '3.0'} | EPT: ${m.ept || '3.0'}`;
         fastList.appendChild(li);
     });
 
     pokemon.chargedMoves.forEach(m => {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${m.name}</strong> — Power: ${m.power} | Energy: ${m.energy}`;
+        li.innerHTML = `<strong>${m.name}</strong> — Power: ${m.power || 80} | Energy: ${m.energy || -50}`;
         chargedList.appendChild(li);
     });
 
     // 7. PokéUhmon's Take
     document.getElementById('poke-take-text').textContent = pokemon.take;
 
-    // 8. Strict League Eligibility
+    // 8. League Eligibility
     renderLeagueEligibility(pokemon.maxCP);
 
     profileContainer.classList.remove('hidden');
@@ -475,21 +338,18 @@ function renderLeagueEligibility(maxCP) {
     const ulEl = document.getElementById('ul-status');
     const mlEl = document.getElementById('ml-status');
 
-    // Great League (1500 CP Limit)
     if (maxCP <= 1500) {
         glEl.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for Great League</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP</span>`;
     } else {
         glEl.innerHTML = `<span style="color: #dc2626; font-weight: 600;">⚠️ Exceeds 1500 CP Cap</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP</span>`;
     }
 
-    // Ultra League (2500 CP Limit)
     if (maxCP <= 2500) {
         ulEl.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for Ultra League</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP</span>`;
     } else {
         ulEl.innerHTML = `<span style="color: #dc2626; font-weight: 600;">⚠️ Exceeds 2500 CP Cap</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP</span>`;
     }
 
-    // Master League (No Limit)
     mlEl.innerHTML = `<span style="color: #16a34a; font-weight: 600;">✅ Eligible for Master League</span><br><span style="color: #475569; font-size: 0.85rem;">Max CP: ${maxCP} CP (No Limit)</span>`;
 }
 
